@@ -2,7 +2,7 @@ import connection from '../database/db.js'
 
 export const obtenerTodasLasEspecialidades = async (req,res)=>{
     try {
-        const connection = `
+        const consulta = `
         SELECT  nombre_especialidad, id_especialidad FROM especialidad 
         `
         const [resultado] = await connection.execute(consulta)
