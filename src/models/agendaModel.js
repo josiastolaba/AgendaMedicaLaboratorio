@@ -2,7 +2,6 @@ import connection from '../database/db.js'
 
 export const crearAgendaInsert = async(hora_inicio, hora_fin, intervalo_turno, max_sobreTurno,descripcion, matricula, id_sucursal, diasSeleccionados) => {
     try {
-
         const consulta = `
             INSERT INTO agenda(hora_inicio, hora_fin, intervalo_turno, max_sobreTurno,descripcion, matricula, id_sucursal) VALUES (?,?,?,?,?,?,?)
         `;
@@ -20,7 +19,7 @@ export const crearAgendaInsert = async(hora_inicio, hora_fin, intervalo_turno, m
 
         return resultado;
     } catch (error) {
-        console.error("Error en crearAgendaInsert", error);
+        console.error("Error en crearAgendaInsert ", error);
     }
 };
 
