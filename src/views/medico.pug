@@ -1,0 +1,101 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet" href="../style.css")
+    link(rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css")
+    script(src="https://code.jquery.com/jquery-3.7.1.min.js")
+    script(src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js")
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css")
+    title Médicos
+  body 
+    .container 
+      .card.mt-5
+        .card-header
+          h2.text-center Médicos  
+          button.btn.btn-success.mb-4(type="button" id="createDoctorBtn") Crear Médico
+        .card-body 
+          // Tabla de médicos
+          table#myTable
+            thead 
+              tr 
+                th Nombre
+                th Apellido
+                th Especialidad
+                th Estado
+                th DNI
+                th activar/inactivar
+            tbody
+              each medico in medicos
+                tr 
+                  td #{medico.nombre}
+                  td #{medico.apellido}
+                  td #{medico.nombre_especialidad}
+                  td #{medico.estado_medico}
+                  td #{medico.dni}
+                  td 
+                    a.btn.btn-primary(href=`medico/inactivarMedico/${medico.id_medico}`) Inactivar
+                    
+      // Formulario para crear un médico
+      .card.mt-4#formCrearMedico
+        .card-header
+          h3 Crear Medico
+        .card-body
+          form#doctorFormMedico(action="/medico/crearMedico" method="POST")
+            .form-group.mt-3
+              label(for="persona") Persona
+              select#persona.form-control(name="persona" required)
+                option(value="") Seleccione una persona
+                each persona in personas
+                  option(value=persona.dni) #{persona.nombre} #{persona.apellido} #{persona.dni}
+            button.btn.btn-primary(type="submit") Crear Medico
+
+        //Formulario 
+        .card.mt-4
+          .card-header
+            h3 Crear Relacion Medico y Especialidad
+          .card-body
+            form#doctorFormEspecialidad(action="/medico/crearEspeMedico" method="POST")
+              .form-group.mt-3
+                label(for="medico") medico
+                select#medico.form-control(name="medico" required)
+                  option(value="") Seleccione un medico
+                  each medico_p in medicos_puros
+                    option(value=medico_p.id_medico) #{medico_p.nombre} #{medico_p.apellido}
+              .form-group.mt-3
+                label(for="especialidad") Especialidad
+                select#especialidad.form-control(name="especialidad" required)
+                  option(value="") Seleccione una especialidad
+                  each especialidad in especialidades
+                    option(value=especialidad.id_especialidad) #{especialidad.nombre_especialidad}
+              .form-group.mt-3
+                label Estado
+                .form-check
+                  input#activo.form-check-input(type="radio" name="estado" value=1 required)
+                  label.form-check-label(for="activo") Activo
+                .form-check
+                  input#inactivo.form-check-input(type="radio" name="estado" value=0)
+                  label.form-check-label(for="inactivo") Inactivo
+              button.btn.btn-primary(type="submit") Crear Relacion
+
+  script.
+    document.addEventListener('DOMContentLoaded', () => {
+      const createDoctorBtn = document.getElementById('createDoctorBtn');
+      const formCrearMedico = document.getElementById('formCrearMedico');
+
+      if (createDoctorBtn && formCrearMedico) {
+        createDoctorBtn.addEventListener('click', () => {
+          if (!formCrearMedico.style.display || formCrearMedico.style.display === 'none') {
+            formCrearMedico.style.display = 'block';
+          } else {
+            formCrearMedico.style.display = 'none';
+          }
+        });
+      }
+    });
+
+  script.
+    let table = new DataTable('#myTable');
+  
+

@@ -1,0 +1,90 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    title Agenda de Atención Médica
+    link(rel="stylesheet" href="../style.css")
+    
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css")
+  body
+    .container.mt-5
+      h1.text-center.mb-4 Agenda de Atención Médica
+      a#abrirPersona.btn.btn-primary.mb-4(href='#formPersona') Crear Persona
+      .row
+        // Sección Agenda
+        .col-md-4
+          .card.mb-4.shadow-sm
+            .card-body
+              h5.card-title.text-center Agenda
+              p.card-text.text-center Administrar turnos y citas de los pacientes.
+              .d-flex.justify-content-center
+                a.btn.btn-primary(href="/agenda") Ir a Agenda
+                a.btn.btn-primary(href="/agenda/verAgenda") Nuevo turno
+
+        // Sección Medico
+        .col-md-4
+          .card.mb-4.shadow-sm
+            .card-body
+              h5.card-title.text-center Médico
+              p.card-text.text-center Información y gestión de médicos.
+              .d-flex.justify-content-center
+                a.btn.btn-primary(href="/medico") Ir a Médico
+
+        // Sección Paciente
+        .col-md-4
+          .card.mb-4.shadow-sm
+            .card-body
+              h5.card-title.text-center Paciente
+              p.card-text.text-center Información y gestión de pacientes.
+              .d-flex.justify-content-center
+                a.btn.btn-primary(href="/paciente") Ir a Paciente
+    .container
+      .card.mt-4#formPersona
+        .card-header
+          h3 Crear Persona
+        .card-body
+          form#doctorForm(action="/persona/crearPersona" method="POST")
+            .form-group
+              label(for="dni") DNI
+              input#dni.form-control(type="text" name="dni" required)
+
+            .form-group.mt-3
+              label(for="nombre") Nombre
+              input#nombre.form-control(type="text" name="nombre" required)
+
+            .form-group.mt-3
+              label(for="apellido") Apellido
+              input#apellido.form-control(type="text" name="apellido" required)
+
+            .form-group.mt-3
+              label(for="direccion") Dirección
+              input#direccion.form-control(type="text" name="direccion" required)
+
+            .form-group.mt-3
+              label(for="fecha_nacimiento") Fecha de Nacimiento
+              input#fecha_nacimiento.form-control(type="date" name="fecha_nacimiento" required)
+            .form-group.mt-3
+              label(for="email") Email
+              input#email.form-control(type="email" name="email" required)
+            .form-group.mt-3
+              label(for="imagen_documento") Imagen del Documento
+              input#imagen_documento.form-control(type="file" name="imagen_documento" accept="image/*" required)
+            button.btn.btn-primary(type="submit") Crear
+
+    
+    script. 
+      document.addEventListener('DOMContentLoaded', () => {
+        const abrirPersona = document.getElementById('abrirPersona');
+        const formPersona = document.getElementById('formPersona');
+
+        if (abrirPersona && formPersona) {
+          abrirPersona.addEventListener('click', () => {
+            if (!formPersona.style.display || formPersona.style.display === 'none') {
+              formPersona.style.display = 'block';
+            } else {
+              formPersona.style.display = 'none';
+            }
+          });
+        }
+      });

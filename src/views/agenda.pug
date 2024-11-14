@@ -1,0 +1,58 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css")
+    title Agenda
+  body
+    .container
+        .card.mt-4
+            .card-header
+                h3.text-center Crear Agenda
+            .card-body
+                form#doctorForm(action="/agenda/crearAgenda" method="POST")
+
+                    .form-group.mt-3
+                        label(for="hora_inicio") Hora Inicio
+                        input#hora_inicio.form-control(type="time" name="hora_inicio" required)
+
+                    .form-group.mt-3
+                        label(for="hora_fin") Hora Fin
+                        input#hora_fin.form-control(type="time" name="hora_fin" required)
+
+                    .form-group.mt-3
+                        label(for="intervalo_turno") Intervalo de Turno
+                        input#intervalo_turno.form-control(type="time" name="intervalo_turno" required)
+
+                    .form-group.mt-3
+                        label(for="max_sobreTurno") Máximo SobreTurno
+                        input#max_sobreTurno.form-control(type="number" name="max_sobreTurno" required)
+
+                    .form-group.mt-3
+                    label(for="descripcion") Descripcion
+                    textarea#descripcion.form-control(name="descripcion") 
+
+                    .form-group.mt-3
+                        label(for="matricula") Matrícula
+                        select#matricula.form-control(name="matricula" required)
+                            each matricula in matriculas
+                                option(value=matricula.matricula) #{matricula.matricula} Nombre: #{matricula.nombre} #{matricula.apellido}  Especialidad: #{matricula.nombre_especialidad}
+
+                    .form-group.mt-3
+                        label(for="id_sucursal") Sucursal
+                        select#id_sucursal.form-control(name="id_sucursal" required)
+                            each sucursal in sucursales
+                                option(value=sucursal.id_sucursal) Nombre: #{sucursal.nombre_sucursal}  Direccion: #{sucursal.direccion_sucursal}
+
+                    .form-group.mt-3
+                        label(for="dias") Días Laborables
+                        each dia in diasTodos
+                            .form-check
+                                input.form-check-input(type="checkbox" name="dias[]" value=dia.id_dia id=`dia${dia.id_dia}`)
+                                label.form-check-label(for=`dia${dia.id_dia}`) #{dia.dias}
+
+
+                    button.btn.btn-primary(type="submit") Crear Agenda
+
+
